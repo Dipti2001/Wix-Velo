@@ -1,11 +1,11 @@
 $w.onReady(() => {
 	waitForLoading();
-	$w('#section53').hide();
-	$w('#section50').hide();
+	$w('#header').hide();
+	$w('#footer').hide();
 });
 
 export function button_onClick() {
-	$w('#section54').show();
+	$w('#Preloader').show();
 	
 	
 	waitForLoading();
@@ -13,12 +13,12 @@ export function button_onClick() {
 
 function waitForLoading() {
 	setTimeout(() => {
-		$w('#section54').collapse('FadeOut');
-		$w('#section53').show('FadeOut');
-		$w('#section50').show('FadeOut');
+		$w('#Preloader').collapse('FadeOut');
+		$w('#header').show('FadeOut');
+		$w('#footer').show('FadeOut');
 	}, 2000);
 }
 
 setTimeout(function() {
-  $w("#section54").collapse();
+  $w("#Preloader").collapse();
 }, 2000);
