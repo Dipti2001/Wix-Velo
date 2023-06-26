@@ -1,0 +1,15 @@
+$w.onReady(function () {
+  const switchDelay = 2000; // 2 seconds
+  const states = ["box100", "box96", "box91", "box87", "box83", "box67", "box104"];
+  let currentStateIndex = 0;
+
+  function changeStateAfterDelay() {
+    $w('#multiStateBox1').changeState(states[currentStateIndex]);
+    currentStateIndex++;
+    if (currentStateIndex >= states.length) {
+      currentStateIndex = 0;
+    }
+  }
+
+  setInterval(changeStateAfterDelay, switchDelay);
+});
