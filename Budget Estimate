@@ -1,0 +1,270 @@
+
+// Velo API Reference: https://www.wix.com/velo/reference/api-overview/introduction
+
+
+$w.onReady(function () {
+
+
+    let quoteSummary_Arr = [];
+    let web_price_Arr = [];
+
+
+    let pages_Num_Arr = [];
+    pages_Num_Arr[0] = 1;
+
+
+    quoteSummary_Arr[0] = "Deafult";
+
+
+    let price;
+
+
+
+
+const calculator = function () {
+    //CALCULATOR
+    const price = Number(web_price_Arr.reduce((a, b) => a + b, 0)) + (Number(pages_Num_Arr[0]) * 0) +
+        $w("#typeselectionTags").value.map(Number).reduce((a, b) => a + b, 0) + $w('#pagesselectionTags').value.map(Number).reduce((a, b) => a + b, 0)
+        + $w('#levelselectionTags').value.map(Number).reduce((a, b) => a + b, 0) + $w('#contentselectionTags').value.map(Number).reduce((a, b) => a + b, 0);
+
+
+    const formattedPrice = `₹${Number(price).toLocaleString('en-IN')}`;
+
+
+    $w("#estimatedBudget").value = formattedPrice;
+     $w("#estimatedBudget").readOnly = true;
+    $w("#totalPriceText").text = formattedPrice;
+};
+
+
+    
+
+
+        //SUMMARY TEXTS📖
+      // $w("#quoteSummaryText").text = quoteSummary_Arr.join(" ");
+//1st
+    
+
+
+     $w('#typeselectionTags').onChange((event) => {
+        const selectedTag = $w('#typeselectionTags').value;
+        let selectedIndex = Number($w('#typeselectionTags').selectedIndices);
+
+
+calculator();
+
+
+        for (var i = 0; i < selectedTag.length - 1; i++) {
+            if (selectedTag.length > 1) {
+                selectedTag.shift();
+
+
+            }
+        }
+
+
+        setTimeout(() => {
+            $w('#typeselectionTags').value = [];
+            $w('#typeselectionTags').value = selectedTag;
+
+
+            //REPLACE THE VALUE WITH STRINGS
+            for (selectedIndex = 0; selectedIndex < selectedTag.length; selectedIndex++) {
+                if (selectedTag[selectedIndex] === "60000") {
+                    selectedTag.splice(selectedIndex, 1, "eCommerce")
+
+
+                } else if (selectedTag[selectedIndex] === "50000") {
+                    selectedTag.splice(selectedIndex, 1, "Booking")
+
+
+                } else if (selectedTag[selectedIndex] === "25000") {
+                    selectedTag.splice(selectedIndex, 1, "Business")
+
+
+                }
+
+
+               // quoteSummary_Arr[0] = `🕛 ${selectedTag.toString()}`;
+
+
+            }
+
+
+            calculator();
+        }, 1)
+
+
+    });
+
+
+//2nd
+    
+
+
+     $w('#pagesselectionTags').onChange((event) => {
+        const selectedTag = $w('#pagesselectionTags').value;
+        let selectedIndex = Number($w('#pagesselectionTags').selectedIndices);
+
+
+calculator();
+
+
+        for (var i = 0; i < selectedTag.length - 1; i++) {
+            if (selectedTag.length > 1) {
+                selectedTag.shift();
+
+
+            }
+        }
+
+
+        setTimeout(() => {
+            $w('#pagesselectionTags').value = [];
+            $w('#pagesselectionTags').value = selectedTag;
+
+
+            //REPLACE THE VALUE WITH STRINGS
+            for (selectedIndex = 0; selectedIndex < selectedTag.length; selectedIndex++) {
+                if (selectedTag[selectedIndex] === "0") {
+                    selectedTag.splice(selectedIndex, 2, "1-4")
+
+
+                } else if (selectedTag[selectedIndex] === "5000") {
+                    selectedTag.splice(selectedIndex, 2, "5-8")
+
+
+                } else if (selectedTag[selectedIndex] === "15000") {
+                    selectedTag.splice(selectedIndex, 2, "9-12")
+
+
+                }else if (selectedTag[selectedIndex] === "25000") {
+                    selectedTag.splice(selectedIndex, 2, "13+")
+
+
+                }
+
+
+               // quoteSummary_Arr[0] = `🕛 ${selectedTag.toString()}`;
+
+
+            }
+
+
+            calculator();
+        }, 1)
+
+
+    });
+
+
+//3nd
+    
+
+
+     $w('#levelselectionTags').onChange((event) => {
+        const selectedTag = $w('#levelselectionTags').value;
+        let selectedIndex = Number($w('#levelselectionTags').selectedIndices);
+
+
+calculator();
+
+
+        for (var i = 0; i < selectedTag.length - 1; i++) {
+            if (selectedTag.length > 1) {
+                selectedTag.shift();
+
+
+            }
+        }
+
+
+        setTimeout(() => {
+            $w('#levelselectionTags').value = [];
+            $w('#levelselectionTags').value = selectedTag;
+
+
+            //REPLACE THE VALUE WITH STRINGS
+            for (selectedIndex = 0; selectedIndex < selectedTag.length; selectedIndex++) {
+                if (selectedTag[selectedIndex] === "0") {
+                    selectedTag.splice(selectedIndex, 3, "Template")
+
+
+                } else if (selectedTag[selectedIndex] === "25000") {
+                    selectedTag.splice(selectedIndex, 3, "Complete Design")
+
+
+                } else if (selectedTag[selectedIndex] === "65000") {
+                    selectedTag.splice(selectedIndex, 3, "ui/ux")
+
+
+                }
+
+
+               // quoteSummary_Arr[0] = `🕛 ${selectedTag.toString()}`;
+
+
+            }
+
+
+            calculator();
+        }, 1)
+
+
+    }); 
+
+
+//4th
+    
+
+
+     $w('#contentselectionTags').onChange((event) => {
+        const selectedTag = $w('#contentselectionTags').value;
+        let selectedIndex = Number($w('#contentselectionTags').selectedIndices);
+
+
+calculator();
+
+
+        for (var i = 0; i < selectedTag.length - 1; i++) {
+            if (selectedTag.length > 1) {
+                selectedTag.shift();
+
+
+            }
+        }
+
+
+        setTimeout(() => {
+            $w('#contentselectionTags').value = [];
+            $w('#contentselectionTags').value = selectedTag;
+
+
+            //REPLACE THE VALUE WITH STRINGS
+            for (selectedIndex = 0; selectedIndex < selectedTag.length; selectedIndex++) {
+                if (selectedTag[selectedIndex] === "10000") {
+                    selectedTag.splice(selectedIndex, 4, "Yes")
+
+
+                } else if (selectedTag[selectedIndex] === "0") {
+                    selectedTag.splice(selectedIndex, 4, "No")
+
+
+                } 
+
+
+               // quoteSummary_Arr[0] = `🕛 ${selectedTag.toString()}`;
+
+
+            }
+            calculator();
+        }, 1)
+
+    });     
+    
+    $w("#estimatedBudget").value = price;
+});
+
+
+
+
