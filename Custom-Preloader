@@ -1,0 +1,24 @@
+$w.onReady(() => {
+	waitForLoading();
+	$w('#section53').hide();
+	$w('#section50').hide();
+});
+
+export function button_onClick() {
+	$w('#section54').show();
+	
+	
+	waitForLoading();
+}
+
+function waitForLoading() {
+	setTimeout(() => {
+		$w('#section54').collapse('FadeOut');
+		$w('#section53').show('FadeOut');
+		$w('#section50').show('FadeOut');
+	}, 2000);
+}
+
+setTimeout(function() {
+  $w("#section54").collapse();
+}, 2000);
