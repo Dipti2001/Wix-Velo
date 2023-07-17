@@ -1,0 +1,44 @@
+import wixAnimations from 'wix-animations';
+
+const heroImagesTimeline = wixAnimations.timeline();
+let heroIsVisible = false;
+let bigMoveElements, smallMoveElements;
+
+$w.onReady(function () {
+    bigMoveElements = $w("#imageX2,#imageX4,#imageX5, #imageX3");
+    smallMoveElements = $w("#imageX7, #imageX6, #imageX1");
+
+    checkIfHeroSectionIsVisible();
+    initCustomElement();
+
+});
+
+function initCustomElement() {
+    $w('#customElement1').on('coor', (event) => {
+        let clientX = event.detail.clientX;
+        let clientY = event.detail.clientY;
+		
+        $w('#coorText').text = "X: " + clientX + " / Y: " + clientY;
+        if (heroIsVisible) {
+            animateHeroImages(clientX, clientY);
+        } else {
+            console.log('Dont play animation');
+        }
+    });
+}
+
+function animateHeroImages(clientX, clientY) {
+    heroImagesTimeline
+        .add(bigMoveElements, { x: clientX / 10, y: clientY / 10, duration: 1, easing: 'easelinear' })
+        .add(smallMoveElements, { x: clientX / 15, y: clientY / 15, duration: 1, easing: 'easeLinear' }, 0)
+        .play();
+}
+
+function checkIfHeroSectionIsVisible() {
+$w( '#heroSection').onViewportEnter ( () => {
+heroIsVisible = true;
+});
+$w('#heroSection').onViewportLeave(() => {
+heroIsVisible = false;
+});
+}
