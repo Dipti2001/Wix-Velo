@@ -1,0 +1,82 @@
+import wixAnimations from 'wix-animations';
+
+$w.onReady(function () {
+
+    //*** Run the function only after the database is ready ***//
+    // If you don't want to save the information in the database >> delete the "onReady" function >> use only the "initLikesRepeater()" function
+    $w('#dynamicDataset').onReady(() => {
+        initLikesRepeater();
+    });
+
+});
+
+function initLikesRepeater() {
+    let debounceTimer;
+    const repeater = $w('#likesRepeater');
+    const clickArea = $w('#clickArea');
+    const dynamicDataset = $w('#dynamicDataset');
+    const totalLikesTxt = $w('#totalLikes');
+
+    //*** Getting the latest number of likes as it appears in the database ***//
+    // If you are not using a database >> enter the number 0 (let likes = 0;)
+    let likes = dynamicDataset.getCurrentItem().likes || 0;
+
+    //*** Updating the text with the number of likes ***//
+    totalLikesTxt.text = likes.toString();
+
+    //*** Exposing the text of the number of likes in case there are more than 10 likes ***//
+    if (likes > 10) { totalLikesTxt.show(); }
+
+    //*** Create a new item and add it to the repeater on click + Saving the new likes ***//
+    clickArea.onClick(() => {
+        const tempData = repeater.data;
+        const newItem = { _id: `${repeater.data.length + 1}` };
+        repeater.data = tempData.concat(newItem);
+        likes++;
+
+        //*** Exposing the text of the number of likes in case there are more than 10 likes ***//
+        if (likes > 10) { totalLikesTxt.show(); }
+
+        //*** Updating the text with the number of likes ***//
+        totalLikesTxt.text = likes.toString();
+
+        //*** After a second that the user stopped clicking >> we will save the information in the database ***//
+        // If you don't want to save the information in the database >> delete this function
+        if (debounceTimer) {
+            clearTimeout(debounceTimer);
+            debounceTimer = null;
+        }
+        debounceTimer = setTimeout(() => {
+            // console.log(event.target.value)
+            saveData(likes);
+        }, 1000);
+
+    });
+
+	//*** Setting the animation for each new item we create by clicking ***//
+    repeater.onItemReady(($item) => {
+        wixAnimations.timeline()
+            .add($item('#likesRepItem'), {
+                y: getRandomNumber(-200, -80),
+                x: getRandomNumber(-80, 80),
+                scale: getRandomNumber(0.1, 1.8),
+                rotate: getRandomNumber(-45, 45),
+                opacity: 0,
+                duration: 800
+            }).play();
+    });
+}
+
+//*** Saving the amount of likes in the database ***//
+function saveData(newlikes) {
+    const dataset = $w('#dynamicDataset');
+
+    console.log('Saving...');
+    dataset.setFieldValue('likes', newlikes);
+    dataset.save();
+}
+
+//*** Getting a random number between 2 numbers ****//
+function getRandomNumber(min, max) {
+    return Math.random() * (max - min) + min;
+}
